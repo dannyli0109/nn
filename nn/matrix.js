@@ -59,6 +59,16 @@ class Matrix {
         }
     }
 
+    static subtract(a, b) {
+        let result = new Matrix(a.rows, a.cols)
+        for (let i = 0; i < a.rows; i++) {
+            for (let j = 0; j < a.cols; j++) {
+                result.data[i][j] = a.data[i][j] - b.data[i][j]
+            }
+        }
+        return result
+    }
+
     static multiply(a, b) {
         if (a.cols !== b.rows) {
             console.error('Columns of a must equals to rows of b')
@@ -96,14 +106,14 @@ class Matrix {
         return result
     }
 
-    transpose() {
-        let result = new Matrix(this.cols, this.rows)
-        for (let i = 0; i < this.rows; i++) {
-            for (let j = 0; j < this.cols; j++) {
-                result.data[j][i] = this.data[i][j]
+    static transpose(matrix) {
+        let result = new Matrix(matrix.cols, matrix.rows)
+        for (let i = 0; i < matrix.rows; i++) {
+            for (let j = 0; j < matrix.cols; j++) {
+                result.data[j][i] = matrix.data[i][j]
             }
         }
-        this.data = result.data
+        return result
     }
 
     map(func) {
@@ -112,5 +122,16 @@ class Matrix {
                 this.data[i][j] = func(this.data[i][j], i, j)
             }
         }
+    }
+
+    static map(matrix, func) {
+        let result = new Matrix(matrix.rows, matrix.cols)
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.cols; j++) {
+                let val = this.data[i][j]
+                result.data[i][j] = func(val)
+            }
+        }
+        return result
     }
 }
